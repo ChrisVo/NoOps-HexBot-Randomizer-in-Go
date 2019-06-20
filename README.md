@@ -1,7 +1,7 @@
 # Hex Bot (in Golang)
+This script serves a web server that produces a random background color everytime refreshed.
 
-Simple script that returns a new hex value everytime the script is ran.
+### How to Run
+* To build and make an executable simple run `go build` in this directory
+* To run without building, run `go run main.go` within this directory
 
-Nothing fancy... yet
-
-The `spacecount.go` file was just a script that I found online to learn how to use the http package.
