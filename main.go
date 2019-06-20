@@ -15,7 +15,7 @@ type Color struct {
 	} `json:"colors"`
 }
 
-func main() {
+func getColor() string {
 	url := "https://api.noopschallenge.com/hexbot"
 
 	// Create color client
@@ -51,8 +51,29 @@ func main() {
 	if jsonErr != nil {
 		log.Fatal(jsonErr)
 	}
+	var hexValue string
 	// Iterate through the colors
 	for _, b := range color.Colors {
-		fmt.Printf("%s", b.Value)
+		// fmt.Printf("%s", b.Value)
+		hexValue = b.Value
 	}
+	return hexValue
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	color := getColor()
+	fmt.Fprintf(w,
+		`<body style='background-color: %s'>
+			<p style='color: white'>You're looking at hex-value: %s</p>
+			<p style='color: white'>Refresh to change the background color.</p>
+		</body>`,
+		color,
+		color,
+	)
+}
+
+func main() {
+	http.HandleFunc("/", handler)
+	fmt.Println("Starting up server... check localhost:6060")
+	log.Fatal(http.ListenAndServe(":6060", nil))
 }
